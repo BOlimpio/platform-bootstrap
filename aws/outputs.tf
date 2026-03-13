@@ -70,23 +70,3 @@ output "github_actions_env_vars" {
     AWS_REGION   = var.aws_region
   }
 }
-
-output "github_actions_permissions_snippet" {
-  description = "Permissions block to add to GitHub Actions workflow"
-  value       = <<-EOT
-    permissions:
-      id-token: write   # Required for OIDC
-      contents: read    # Required for checkout
-  EOT
-}
-
-output "github_actions_aws_auth_step" {
-  description = "AWS authentication step for GitHub Actions"
-  value       = <<-EOT
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        role-to-assume: ${aws_iam_role.github_actions.arn}
-        aws-region: ${var.aws_region}
-  EOT
-}
